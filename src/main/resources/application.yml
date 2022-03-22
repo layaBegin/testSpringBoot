@@ -1,0 +1,35 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+
+# 配置日志
+logging:
+  level:
+    com.yt: debug
+#简单类型的数据
+my:
+  host: localhost
+  port: 6379
+  #引用类型数据
+  user:
+    id: 110
+    name: 狗娃
+    age: 18
+  #数组类型
+  address:
+    - 广州
+    - 湛江
+    - 东莞
+  #数组引用类型  存储一个个user对象
+  userList:
+    - id: 110
+      name: 狗娃
+      age: 18
+    - id: 220
+      name: 狗剩
+      age: 20
+    - id: 330
+      name: 铁蛋
+      age: 30
