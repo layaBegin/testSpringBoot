@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panda.sport.manager.dbext.mapper.StandardMatchInfoExtMapper">
+
+    <resultMap id="PageStandardMatchInfo" type="com.panda.sport.manager.dbext.entity.StandardMatchInfoExt">
+        <id property="id" column="id"/>
+        <result property="sportId" column="sport_id"/>
+        <result property="beginTime" column="begin_time"/>
+        <result property="tournamentNameCode" column="tournamentnamecode"/>
+        <result property="tournamentManagerId" column="tournamentManagerId"/>
+        <result property="tournamentLevel" column="tournament_level"/>
+        <result property="relatedDataSourceCoderNum" column="related_data_source_coder_num"/>
+        <result property="relatedDataSourceCoderList" column="related_data_source_coder_list"/>
+        <result property="beginTime" column="begin_time"/>
+        <result property="homeNameCode" column="homenamecode"/>
+        <result property="awayNameCode" column="awaynamecode"/>
+        <result property="active" column="active"/>
+        <result property="neutralGround" column="neutral_ground"/>
+        <result property="riskManagerCode" column="risk_manager_code"/>
+        <result property="secondsMatchStart" column="seconds_match_start"/>
+        <result property="operateMatchStatus" column="operate_match_status"/>
+        <result property="standard" column="standard"/>
+        <result property="matchStatus" column="match_status"/>
+        <result property="matchPeriodId" column="match_period_id"/>
+        <result property="liveOddSupport" column="live_odd_support"/>
+        <result property="matchManageId" column="match_manage_id"/>
+        <result property="matchDataProviderCode" column="match_data_provider_code"/>
+        <result property="matchPositionName" column="match_position_name"/>
+        <result property="matchPositionNameCode" column="match_position_name_code"/>
+        <result property="standardTournamentId" column="standard_tournament_id"/>
+        <result property="awayTeamId" column="away_team_id"/>
+        <result property="homeTeamId" column="home_team_id"/>
+        <result property="preMatchBusiness" column="pre_match_business"/>
+        <result property="liveOddBusiness" column="live_odd_business"/>
+        <result property="homeTeamLogUrl" column="home_team_log_url"/>
+        <result property="awayTeamLogUrl" column="away_team_log_url"/>
+        <result property="homeTeamLogUrlThumb" column="home_team_log_url_thumb"/>
+        <result property="awayTeamLogUrlThumb" column="away_team_log_url_thumb"/>
+        <result property="financialTime" column="financial_time"/>
+        <result property="homeAwayOpposite" column="home_away_opposite"/>
+        <result property="teamName" column="team_name" javaType="com.panda.sport.manager.dbext.entity.json.TeamName"
+                jdbcType="ARRAY" typeHandler="com.panda.sport.manager.dbext.handler.JSONHandler"/>
+        <result property="teamManageId" column="team_manage_id" javaType="java.lang.Long" jdbcType="ARRAY"
+                typeHandler="com.panda.sport.manager.dbext.handler.JSONHandler"/>
+        <result property="roundType" column="round_type"/>
+        <result property="siteType" column="site_type"/>
+        <result property="associationId" column="association_id"/>
+        <result property="thirdIds" column="third_ids"/>
+        <result property="soldFlag" column="sold_flag"/>
+        <result property="reverseStatus" column="reverse_status"/>
+        <result property="touLogoUrl" column="tou_logo_url"/>
+        <result property="leagueIsLock" column="league_is_lock"/>
+        <result property="neutralGroundStatus" column="neutral_ground_status"/>
+        <result property="regionId" column="region_id"/>
+        <result property="thirdMatchId" column="third_match_id"/>
+        <result property="thirdMatchSourceId" column="third_match_source_id"/>
+        <result property="leagueUrl" column="league_url"/>
+        <result property="tournamentNameCode" column="tournament_name_code"/>
+        <result property="tournamentRoundNumber" column="tournament_round_number"/>
+        <result property="seasonNameCode" column="season_name_code"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="newThird" column="new_third"/>
+        <result property="lotteryNumber" column="lottery_number"/>
+        <result property="remark" column="remark"/>
+        <result property="booked" column="booked"/>
+        <result property="matchType" column="match_type"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <resultMap id="PageThirdMatchInfo" type="com.panda.sport.manager.dbext.entity.ThirdMatchInfoExt">
+        <id property="id" column="id"/>
+        <result property="sportId" column="sport_id"/>
+        <result property="tournamentNameCode" column="tournamentnamecode"/>
+        <result property="tournamentManagerId" column="tournamentManagerId"/>
+        <result property="beginTime" column="begin_time"/>
+        <result property="homeNameCode" column="homenamecode"/>
+        <result property="awayNameCode" column="awaynamecode"/>
+        <result property="matchPeriodId" column="match_period_id"/>
+        <result property="liveOddSupport" column="live_odd_support"/>
+        <result property="active" column="active"/>
+        <result property="neutralGround" column="neutral_ground"/>
+        <result property="standard" column="standard"/>
+        <result property="referenceId" column="reference_id"/>
+        <result property="matchPeriod" column="match_period"/>
+        <result property="operateMatchStatus" column="operate_match_status"/>
+        <result property="secondsMatchStart" column="seconds_match_start"/>
+        <result property="matchPositionName" column="match_position_name"/>
+        <result property="matchDataProviderCode" column="match_data_provider_code"/>
+        <result property="riskManagerCode" column="risk_manager_code"/>
+<!--        <result property="teamName" column="team_name" javaType="com.panda.sport.manager.dbext.entity.json.TeamName"-->
+<!--                jdbcType="ARRAY" typeHandler="com.panda.sport.manager.dbext.handler.JSONHandler"/>-->
+        <result property="roundType" column="round_type"/>
+        <result property="siteType" column="site_type"/>
+        <result property="thirdMatchSourceId" column="third_match_source_id"/>
+    </resultMap>
+
+    <sql id="queryLeagueTable">
+        SELECT
+        t1.id,
+        t1.sport_id,
+        t1.standard_tournament_id,
+        t1.match_period_id,
+        t1.data_source_code,
+        sst.name_code as tournamentnamecode,
+        sst.name_spell as name_spell,
+        sst.tournament_level,
+        t1.home_away_info,
+        t1.reverse_status,
+        t1.related_data_source_coder_num,
+        t1.related_data_source_coder_list,
+        t1.begin_time,
+        t1.neutral_ground,
+        t1.risk_manager_code,
+        t1.operate_match_status,
+        null as live_odd_support,
+        1 as standard,
+        t1.match_manage_id,
+        t1.match_data_provider_code,
+        t1.match_position_name,
+        t1.match_position_name_code,
+        t1.pre_match_business,
+        t1.live_odd_business,
+        t1.match_status,
+        t1.team_name,
+        t1.team_manage_id,
+        t1.seconds_match_start,
+        t1.match_over,
+        t1.round_type,
+        t1.site_type,
+        t1.financial_time,
+        0 as home_away_opposite,
+        t1.sold_flag,
+        t1.neutral_ground_status,
+        t1.remark,
+        th3.booked,
+        t1.match_type,
+        t1.third_match_id,
+        t1.third_match_source_id,
+        t1.tournament_round_number,
+        (SELECT IF(MAX(standard_match_id),1,0) FROM `standard_auto_association` WHERE standard_match_id=t1.id LIMIT 1) AS new_third ,
+        t1.create_time,
+        t1.modify_time
+        FROM standard_match_info t1
+        left join standard_sport_tournament sst on t1.standard_tournament_id = sst.id
+        left join third_match_info th3 on th3.id = t1.third_match_id
+        where t1.standard_tournament_id>0
+        <if test="query.tournamentManagerId != null and query.tournamentManagerId != ''">
+            and sst.tournament_manager_id = #{query.tournamentManagerId}
+        </if>
+        <if test="query.standardTouIds!=null and  query.standardTouIds.size()>0">
+            and sst.id in
+            <foreach collection="query.standardTouIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        <if test="query.teamManagerId != null and query.teamManagerId != ''">
+            and JSON_CONTAINS(t1.team_manage_id ->'$[*]', '"${query.teamManagerId}"', '$')
+        </if>
+        <if test="query.teamName != null and query.teamName != ''">
+            and (UPPER(JSON_EXTRACT(t1.team_name,'$[*].zs')) like concat('%' , UPPER(#{query.teamName}) , '%') or
+            UPPER(JSON_EXTRACT(t1.team_name,'$[*].en')) like concat('%' , UPPER(#{query.teamName}) , '%')
+            )
+        </if>
+        <include refid="standardMatchCondition"></include>
+
+
+        <if test="queryThirdFlag">
+            union
+            select
+            t2.id,
+            t2.sport_id,
+            t2.tournament_id as standard_tournament_id,
+            t2.match_period as match_period_id,
+            t2.data_source_code,
+            tst.name_code as tournamentnamecode,
+            tst.name_spell as name_spell,
+            null tournament_level,
+            t2.home_away_info,
+            null as reverse_status,
+            1 as related_data_source_coder_num,
+            t2.data_source_code as related_data_source_coder_list,
+            t2.begin_time,
+            t2.neutral_ground,
+            null as risk_manager_code,
+            null as operate_match_status,
+            t2.live_odd_support,
+            0 as standard,
+            '' as match_manage_id,
+            null as match_data_provider_code,
+            t2.match_position_name,
+            t2.match_position_name_code,
+            0 as pre_match_business,
+            0 as live_odd_business,
+            t2.match_status,
+            t2.team_name,
+            null as team_manage_id,
+            t2.seconds_match_start,
+            t2.match_over,
+            t2.round_type,
+            t2.site_type,
+            0 as financial_time,
+            t2.home_away_opposite,
+            null sold_flag,
+            null neutral_ground_status,
+            null as remark,
+            t2.booked,
+            t2.match_type,
+            null as third_match_id,
+            t2.third_match_source_id,
+            t2.tournament_round_number,
+            0 new_third,
+            t2.create_time,
+            t2.modify_time
+            from third_match_info t2
+            left join third_sport_tournament tst on t2.tournament_id =tst.id
+            where 1=1
+            <if test="query.startTime != null and query.historyFlag != null and query.historyFlag == 0">
+                and  <![CDATA[ t2.begin_time >= #{query.startTime} ]]>
+            </if>
+            <if test="query.endTime != null and query.historyFlag != null and query.historyFlag == 0">
+                and <![CDATA[ t2.begin_time < #{query.endTime} ]]>
+            </if>
+           and t2.sport_id = #{query.sportId} and t2.reference_id = 0
+            <if test="query.thirdTouIds != null and query.thirdTouIds.size()>0">
+                and tst.id in
+                <foreach collection="query.thirdTouIds" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="query.thirds != null and query.thirds.size()>0">
+                and t2.id in
+                <foreach collection="query.thirds" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="query.thirdMatchSourceId != null and query.thirdMatchSourceId != ''">
+                and t2.third_match_source_id = #{query.thirdMatchSourceId}
+            </if>
+            <if test="query.matchPeriodId != null">
+                and t2.match_period = #{query.matchPeriodId}
+            </if>
+            <if test="query.matchStatus != null">
+                and t2.match_status = #{query.matchStatus}
+            </if>
+            <choose>
+                <when test="query.historyFlag != null and query.historyFlag == 1 ">
+                    and ((t2.match_over = 1 AND <![CDATA[t2.begin_time >= #{query.startTime}]]> and
+                    <![CDATA[t2.begin_time < #{query.endTime}]]>) OR
+                    (t2.match_over = 0 AND <![CDATA[t2.begin_time >= #{query.startTime}]]>  and
+                    <![CDATA[t2.begin_time < #{query.endTime}]]>
+                    AND <![CDATA[t2.begin_time + 14400000 <unix_timestamp( )*1000 )) ]]>
+                </when>
+                <when test="query.liveOddQuery != null and query.liveOddQuery == 1">
+                    and t2.match_status in (1,2,10) and t2.match_over = 0
+                </when>
+                <when test="isTody">
+                     and t2.match_over = 0
+                </when>
+            </choose>
+            <if test="query.teamName != null and query.teamName != ''">
+                and (UPPER(JSON_EXTRACT(t2.team_name,'$[*].zs')) like concat('%' , UPPER(#{query.teamName}) , '%') or
+                UPPER(JSON_EXTRACT(t2.team_name,'$[*].en')) like concat('%' , UPPER(#{query.teamName}) , '%'))
+            </if>
+            <if test="query.tournamentName != null and query.tournamentName != ''">
+                and (UPPER(tst.name) like concat('%' , UPPER(#{query.tournamentName}) , '%')
+                or UPPER(tst.name_spell) like concat('%' , UPPER(#{query.tournamentName}) , '%'))
+            </if>
+
+        </if>
+    </sql>
+    <select id="getMatchVoForPandaPage" resultMap="PageStandardMatchInfo">
+        SELECT t.* from (
+        <include refid="queryLeagueTable"></include>
+        ) t
+        <include refid="queryLeagueTableWhere"></include>
+        ORDER BY begin_time
+        <if test="query.isPage==null">
+            limit #{size} offset #{offset}
+        </if>
+
+    </select>
+
+
+    <sql id="queryLeagueTableWhere">
+        where 1=1
+        <if test="query.bookedPlus != null and query.bookedPlus != ''">
+            and ( t.match_type!=2 OR ( t.match_type=2 AND t.booked=#{query.booked} ) )
+        </if>
+        <if test="query.ids != null and  query.ids.size() != 0">
+            and t.id in
+            <foreach collection="query.ids" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="queryStandardCount != null and queryStandardCount == 1">
+            and t.related_data_source_coder_num = 1
+        </if>
+        <if test="queryStandardCount != null and queryStandardCount == 2">
+            and t.related_data_source_coder_num >= 2
+        </if>
+        <if test="queryList != null and queryList.size() > 0">
+            and
+            <foreach collection="queryList" index="index" item="item" open="(" separator="or" close=")">
+                find_in_set(#{item} , t.related_data_source_coder_list)
+            </foreach>
+        </if>
+        <if test="query.oddStatusFirst != null">
+            and t.risk_manager_code = #{query.oddStatusFirst}
+        </if>
+        <if test="query.oddStatusSecond != null">
+            and t.operate_match_status = #{query.oddStatusSecond}
+        </if>
+        <if test="query.leagueLevel != null and  query.leagueLevel.size() != 0">
+            and t.tournament_level in
+            <foreach collection="query.leagueLevel" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="query.matchManageId != null and query.matchManageId != ''">
+            and t.match_manage_id = #{query.matchManageId}
+        </if>
+        <if test="query.canMoveIntoPreSale!=null and query.canMoveIntoPreSale==1">
+            and t.sold_flag ='Out' and t.standard_tournament_id>0
+        </if>
+        <if test="query.oneHourMatch!=null and query.oneHourMatch==1">
+            AND <![CDATA[ t.create_time >= UNIX_TIMESTAMP()*1000-3600000 ]]>
+        </if>
+    </sql>
+
+
+    <sql id="querythirdLeagueTableWhere">
+
+        where t.sport_id = #{sportId}
+        <if test="standardMatchIdList != null and standardMatchIdList.size()>0">
+            and
+            <foreach collection="standardMatchIdList" index="index" item="item" open="(" separator="or" close=")">
+                t.reference_id = #{item}
+            </foreach>
+        </if>
+    </sql>
+    <sql id="standardMatchCondition">
+        <if test="(query.ids == null or query.ids.size() == 0)  and  query.startTime != null and query.historyFlag != null and query.historyFlag == 0">
+            AND  <![CDATA[  t1.begin_time >= #{query.startTime} ]]>
+        </if>
+        <if test="(query.ids == null or query.ids.size() == 0) and query.endTime != null and query.historyFlag != null and query.historyFlag == 0">
+            AND <![CDATA[ t1.begin_time < #{query.endTime}]]>
+        </if>
+        and t1.sport_id = ${query.sportId}
+
+
+        <if test="query.matchPeriodId != null">
+            and t1.match_period_id = #{query.matchPeriodId}
+        </if>
+        <if test="query.matchStatus != null">
+            and t1.match_status = #{query.matchStatus}
+        </if>
+        <if test="query.thirdMatchSourceId != null and query.thirdMatchSourceId != ''">
+            and t1.third_match_source_id = #{query.thirdMatchSourceId}
+        </if>
+        <choose>
+            <when test="query.historyFlag != null and query.historyFlag == 1 ">
+                and ((t1.match_over = 1 AND <![CDATA[t1.begin_time >= #{query.startTime}]]> and
+                <![CDATA[t1.begin_time < #{query.endTime}]]>) OR
+                (t1.match_over = 0 AND <![CDATA[t1.begin_time >= #{query.startTime}]]>  and
+                <![CDATA[t1.begin_time < #{query.endTime}]]>
+                AND <![CDATA[t1.begin_time + 14400000 <unix_timestamp( )*1000 )) ]]>
+            </when>
+            <when test="query.liveOddQuery != null and query.liveOddQuery == 1">
+                and t1.match_status in (1,2,10) and t1.match_over = 0
+            </when>
+            <when test="isTody">
+                and t1.match_over = 0
+            </when>
+        </choose>
+        <if test="query.matchManageId != null and query.matchManageId != ''">
+            and t1.match_manage_id = #{query.matchManageId}
+        </if>
+        <if test="query.tournamentName != null and query.tournamentName != ''">
+            and (UPPER(sst.name) like concat('%' , UPPER(#{query.tournamentName}) , '%')
+            or UPPER(sst.name_spell) like concat('%' , UPPER(#{query.tournamentName}) , '%')
+            or sst.third_tournament_id in (
+            select tst.id from third_sport_tournament tst where
+            UPPER(tst.NAME) LIKE concat( '%', UPPER(#{query.tournamentName}), '%' )
+            OR UPPER(tst.name_spell) LIKE concat( '%', UPPER(#{query.tournamentName}), '%' )
+            )
+            )
+        </if>
+    </sql>
+
+<!--    &lt;!&ndash;查询赛事详情  单条记录&ndash;&gt;-->
+<!--    <select id="queryMatchDetails" resultMap="PageStandardMatchInfo">-->
+<!--		SELECT-->
+<!--			t1.id,-->
+<!--			t1.sport_id,-->
+<!--			t1.standard_tournament_id,-->
+<!--			t1.match_period_id,-->
+<!--			t1.data_source_code,-->
+<!--			sst.name_code AS tournamentnamecode,-->
+<!--			sst.tournament_manager_id AS tournamentManagerId,-->
+<!--			sst.name_spell AS name_spell,-->
+<!--			t1.home_away_info,-->
+<!--			sst.tournament_level AS tournament_level,-->
+<!--			sst.league_url,-->
+<!--			sst.tournament_name_code,-->
+<!--			t1.related_data_source_coder_num,-->
+<!--			t1.related_data_source_coder_list,-->
+<!--			t1.begin_time,-->
+<!--			t1.active,-->
+<!--			t1.neutral_ground,-->
+<!--			t1.risk_manager_code,-->
+<!--			t1.operate_match_status,-->
+<!--			NULL AS live_odd_support,-->
+<!--			1 AS standard,-->
+<!--			t1.match_manage_id,-->
+<!--			t1.match_data_provider_code,-->
+<!--			t1.match_position_name,-->
+<!--			t1.match_position_name_code,-->
+<!--			t1.pre_match_business,-->
+<!--			t1.live_odd_business,-->
+<!--			t1.match_status,-->
+<!--			t1.team_name,-->
+<!--			t1.team_manage_id,-->
+<!--			t1.seconds_match_start,-->
+<!--			t1.match_over,-->
+<!--			group_concat(tm.match_status) AS match_status_list,-->
+<!--			t1.round_type,-->
+<!--			t1.site_type,-->
+<!--			t1.financial_time,-->
+<!--			t1.lottery_number-->
+<!--			0 AS home_away_opposite-->
+<!--		FROM-->
+<!--			standard_match_info t1-->
+<!--		LEFT JOIN standard_sport_tournament sst ON t1.standard_tournament_id = sst.id-->
+<!--		LEFT JOIN third_match_info tm ON t1.id = tm.reference_id-->
+<!--		WHERE-->
+<!--	 t1.id =  #{id}-->
+<!--    </select>-->
+    <select id="getMatchVoForPandaPageCount" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        from
+        (
+        <include refid="queryLeagueTable"></include>
+        ) t
+        <include refid="queryLeagueTableWhere"></include>
+    </select>
+
+</mapper>

@@ -7,7 +7,36 @@ server:
 # 配置日志
 logging:
   level:
-    com.yt: debug
+    com: debug
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/panda
+    username: root
+    password: root
+  #配置redis
+  redis:
+    host: localhost # 主机
+    port: 6379      # 端口
+mybatis:
+  #别名扫描
+  type-aliases-package: com.panda.sport.manager
+  #开启下划线与小驼峰映射
+  configuration:
+    map-underscore-to-camel-case: true
+    #开启sql语句的日志记录
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #指定mapper.xml文件的位置
+  mapper-locations:
+    - classpath:mapper/*.xml
+
+
+
+
+
+
+
 #简单类型的数据
 my:
   host: localhost

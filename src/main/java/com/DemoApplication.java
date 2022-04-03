@@ -1,8 +1,10 @@
-package com.yt;
+package com;
 
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * spring的启动类的作用：该类的作用就是启动一个springboot的项目的入口类
@@ -11,6 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
  */
 @SpringBootApplication
+@ComponentScan("com.panda.sport.manager")
+@MapperScan("com.panda.sport.manager.*.mapper")
 public class DemoApplication {
 
     public static void main(String[] args) {
